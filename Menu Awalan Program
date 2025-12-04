@@ -1,0 +1,21 @@
+#include <ncurses\curses.h>
+using namespace std;
+
+int main() {
+    initscr();
+    mvprintw(7, 47, "SELAMAT DATANG");
+    mvprintw(8, 45, "DI GAME FLAPPY BIRD");
+    mvprintw(12, 45, "PILIH MENU BERIKUT : ");
+    mvprintw(13, 45, "1. MULAI PERMAINAN (Gunakan SPASI untuk lompat)");
+    mvprintw(14, 45, "2. LIHAT SKOR");
+    mvprintw(15, 45, "3. KELUAR"); 
+    mvprintw(22, 45, "DIBUAT OLEH :");
+    mvprintw(23, 45, "1. WENNO SIVAN MAHIBRA");
+    mvprintw(24, 45, "2. NAILA SALSABIL");
+    mvprintw(25, 45, "3. JENY SARAH");
+
+    refresh();
+    getch();
+    endwin();
+return 0;
+}

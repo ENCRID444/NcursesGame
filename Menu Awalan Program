@@ -1,21 +1,110 @@
-#include <ncurses\curses.h>
-using namespace std;
+#include <curses.h>
+#include <string>
+
+void print_menu(WINDOW *menu_win, int pilihanTerpilih, const char *opsi[], int jumlahOpsi);
 
 int main() {
     initscr();
-    mvprintw(7, 47, "SELAMAT DATANG");
-    mvprintw(8, 45, "DI GAME FLAPPY BIRD");
-    mvprintw(12, 45, "PILIH MENU BERIKUT : ");
-    mvprintw(13, 45, "1. MULAI PERMAINAN (Gunakan SPASI untuk lompat)");
-    mvprintw(14, 45, "2. LIHAT SKOR");
-    mvprintw(15, 45, "3. KELUAR"); 
-    mvprintw(22, 45, "DIBUAT OLEH :");
-    mvprintw(23, 45, "1. WENNO SIVAN MAHIBRA");
-    mvprintw(24, 45, "2. NAILA SALSABIL");
-    mvprintw(25, 45, "3. JENY SARAH");
+    clear();
+    noecho();
+    cbreak();
+    curs_set(0);
 
-    refresh();
-    getch();
+    int maxY, maxX;
+    getmaxyx(stdscr, maxY, maxX);  // ambil ukuran layar
+
+    int menuWidth = 30, menuHeight = 7;
+    int menuStartX = (maxX - menuWidth) / 2;
+    int menuStartY = (maxY / 2) - 2;
+
+    WINDOW *menu_win = newwin(menuHeight, menuWidth, menuStartY, menuStartX);
+    keypad(menu_win, TRUE);
+
+    const char *opsi[] = {
+        "Mulai Permainan",
+        "Lihat Skor",
+        "Keluar"
+    };
+
+    int jumlahOpsi = sizeof(opsi) / sizeof(opsi[0]);
+    int pilihanTerpilih = 0;
+    int pilihan = -1;
+
+    while (1) {
+        clear();
+        using namespace std;
+
+        // ==== Teks Sambutan di Tengah ====
+        string judul = "SELAMAT DATANG";
+        string sub = "DI GAME FLAPPY BIRD";
+        string instruksi = "Pilih menu di bawah";
+
+        int centerX = maxX / 2;
+
+        attron(A_BOLD | A_STANDOUT);
+        mvprintw(3, centerX - judul.length() / 2, "%s", judul.c_str());
+        attroff(A_STANDOUT);
+
+        mvprintw(5, centerX - sub.length() / 2, "%s", sub.c_str());
+        attroff(A_BOLD);
+
+        mvhline(7, centerX - 15, '-', 30); // garis pemisah
+        mvprintw(9, centerX - instruksi.length() / 2, "%s", instruksi.c_str());
+
+        refresh();
+
+        // ==== Print Menu ====
+        print_menu(menu_win, pilihanTerpilih, opsi, jumlahOpsi);
+
+        int tombol = wgetch(menu_win);
+
+        switch (tombol) {
+            case KEY_UP:
+                if (pilihanTerpilih <= 0)
+                    pilihanTerpilih = jumlahOpsi - 1;
+                else
+                    pilihanTerpilih--;
+                break;
+
+            case KEY_DOWN:
+                if (pilihanTerpilih >= jumlahOpsi - 1)
+                    pilihanTerpilih = 0;
+                else
+                    pilihanTerpilih++;
+                break;
+
+            case 10: // Enter
+                pilihan = pilihanTerpilih;
+                break;
+        }
+
+        if (pilihan != -1) {
+            if (pilihan == 2)  // Keluar
+                break;
+
+            clear();
+            mvprintw(maxY/2, maxX/2 - 10, "Kamu memilih: %s", opsi[pilihan]);
+            mvprintw(maxY/2 + 2, maxX/2 - 12, "Tekan tombol apapun untuk kembali...");
+            getch();
+
+            pilihan = -1;
+        }
+    }
+
     endwin();
-return 0;
+    return 0;
+}
+
+void print_menu(WINDOW *menu_win, int pilihanTerpilih, const char *opsi[], int jumlahOpsi) {
+    box(menu_win, 0, 0);
+    for (int i = 0; i < jumlahOpsi; ++i) {
+        if (i == pilihanTerpilih) {
+            wattron(menu_win, A_REVERSE);
+            mvwprintw(menu_win, i + 1, 1, "%s", opsi[i]);
+            wattroff(menu_win, A_REVERSE);
+        } else {
+            mvwprintw(menu_win, i + 1, 1, "%s", opsi[i]);
+        }
+    }
+    wrefresh(menu_win);
 }

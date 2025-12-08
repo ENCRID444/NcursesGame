@@ -1,0 +1,24 @@
+#include <ncurses/ncurses.h>
+#include <windows.h>
+using namespace std;
+
+int main(){
+	initscr();
+	
+	for(int i = 0; i < 3; i++){
+		mvprintw(16, 50, "=== Loading. . . ===");
+		mvprintw(17, 50, "--------------------");
+		mvprintw(18, 50, "|                  |");
+		mvprintw(19, 50, "--------------------");
+		
+		for (int f = 1; f < 18; f++){
+			mvprintw(18, 50 + f, ">");
+			refresh();
+			Sleep(150);
+			
+		}
+	}
+	
+	endwin();
+	return 0;
+}

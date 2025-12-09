@@ -18,3 +18,16 @@ void muatSkorTertinggi(){
         file.close();
     }
 }
+
+//fungsi untuk menyimpan skor tertinggi 
+void simpanSkorTertinggi(int skor){
+    if (skor > skor Tertinggi){
+        skorTertinggi = skor;
+        ofstream file("flappy_score.txt");
+        if (file.is_open()){
+            file << skorTertinggi;
+            file.close();
+        }
+    }
+}
+

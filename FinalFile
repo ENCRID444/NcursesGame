@@ -31,3 +31,147 @@ void simpanSkorTertinggi(int skor){
     }
 }
 
+
+// Fungsi utama game Flappy Bird
+void mulaiPermainan() {
+    // ===== ATUR MODE GAME =====
+    nodelay(stdscr, TRUE);   // Input non-blocking
+    keypad(stdscr, TRUE);    // Aktifkan special keys
+    curs_set(0);            // Sembunyikan kursor
+    
+    // ===== DAPATKAN UKURAN LAYAR =====
+    int tinggi, lebar;
+    getmaxyx(stdscr, tinggi, lebar);
+    
+    // ===== VARIABEL GAME =====
+    int burungY = tinggi / 2;
+    int burungX = 20;
+    float kecepatan = 0.0f;
+    
+    // Pipa dengan posisi random
+    int pipa1X = lebar / 2;
+    int pipa1GapY = rand() % (tinggi - 25) + 10;
+    
+    int pipa2X = lebar;
+    int pipa2GapY = rand() % (tinggi - 25) + 10;
+    
+    int skor = 0;
+    bool gameBerjalan = true;
+    
+    // ===== SETTING GAME =====
+    const float GRAVITASI = 0.4f;
+    const float LOMPAT = -3.0f;
+    const int CELAH = 15;
+    
+    // ===== COUNTDOWN SEBELUM MULAI =====
+    clear();
+    
+    // Tampilkan skor tertinggi di layar countdown
+    mvprintw(tinggi/2 - 3, lebar/2 - 10, "SKOR TERTINGGI: %d", skorTertinggi);
+    mvprintw(tinggi/2 - 1, lebar/2 - 10, "SIAP...");
+    refresh();
+    napms(1000);
+    
+    mvprintw(tinggi/2 - 1, lebar/2 - 5, "MULAI!");
+    refresh();
+    napms(500);
+    
+    // ===== GAME LOOP =====
+    while(gameBerjalan) {
+        clear();
+        
+        // Gambar tanah
+        for(int x = 0; x < lebar; x++) {
+            mvprintw(tinggi - 2, x, "=");
+        }
+        
+        // Input
+        int ch = getch();
+        if(ch == ' ') {
+            kecepatan = LOMPAT;
+        } else if(ch == 27) { // ESC untuk keluar
+            gameBerjalan = false;
+            // Simpan skor jika keluar manual
+            if(skor > 0) {
+                simpanSkorTertinggi(skor);
+            }
+            break;
+        }
+        
+        // Update burung
+        kecepatan += GRAVITASI;
+        burungY += (int)kecepatan;
+        
+        // Batasan layar
+        if(burungY < 1) {
+            burungY = 1;
+            kecepatan = 0;
+        }
+        if(burungY >= tinggi - 3) {
+            gameBerjalan = false;
+        }
+        
+        // Update dan gambar pipa 1
+        pipa1X--;
+        if(pipa1X < 0) {
+            pipa1X = lebar;
+            pipa1GapY = 10 + rand() % (tinggi - CELAH - 20);
+            skor++;
+        }
+        
+        for(int y = 0; y < pipa1GapY; y++) {
+            mvprintw(y, pipa1X, "|");
+        }
+        for(int y = pipa1GapY + CELAH; y < tinggi - 2; y++) {
+            mvprintw(y, pipa1X, "|");
+        }
+        
+        // Update dan gambar pipa 2
+        pipa2X--;
+        if(pipa2X < 0) {
+            pipa2X = lebar;
+            pipa2GapY = 10 + rand() % (tinggi - CELAH - 20);
+            skor++;
+        }
+        
+        for(int y = 0; y < pipa2GapY; y++) {
+            mvprintw(y, pipa2X, "|");
+        }
+        for(int y = pipa2GapY + CELAH; y < tinggi - 2; y++) {
+            mvprintw(y, pipa2X, "|");
+        }
+        
+        // Gambar burung
+        mvprintw(burungY, burungX, ">O");
+        
+        // Cek tabrakan
+        if((pipa1X == burungX || pipa1X + 1 == burungX) &&
+           (burungY < pipa1GapY || burungY > pipa1GapY + CELAH)) {
+            gameBerjalan = false;
+        }
+        
+        if((pipa2X == burungX || pipa2X + 1 == burungX) &&
+           (burungY < pipa2GapY || burungY > pipa2GapY + CELAH)) {
+            gameBerjalan = false;
+        }
+        
+        // Info game (tampilkan skor tertinggi dan skor saat ini)
+        mvprintw(1, 2, "SKOR: %d", skor);
+        mvprintw(2, 2, "TERTINGGI: %d", skorTertinggi);
+        mvprintw(3, 2, "SPASI: Lompat  ESC: Keluar");
+        
+        refresh();
+        napms(70);
+    }
+    
+    // ===== GAME OVER =====
+    nodelay(stdscr, FALSE);  // Kembali ke blocking mode
+    
+    // Simpan skor jika lebih tinggi
+    simpanSkorTertinggi(skor);
+    
+    // Muat ulang skor tertinggi
+    muatSkorTertinggi();
+    
+    clear();
+

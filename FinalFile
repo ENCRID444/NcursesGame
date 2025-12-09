@@ -5,3 +5,16 @@
 #include <string>
 
 using namespace std;
+
+
+//variabel global untuk skor
+int skorTertinggi = 0;
+
+//fungsi untuk memuat skor dari file
+void muatSkorTertinggi(){
+    ifstream file("flappy_score.txt");
+    if (file.is_open()){
+        file >> skorTertinggi;
+        file.close();
+    }
+}

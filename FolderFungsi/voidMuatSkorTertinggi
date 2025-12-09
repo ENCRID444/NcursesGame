@@ -1,0 +1,7 @@
+void muatSkorTertinggi(){
+  ifstream file("flappy_score.txt");
+  if (file.is_open()){
+    file >> skorTertinggi;
+    file.close();
+  }
+}

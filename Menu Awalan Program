@@ -34,7 +34,7 @@ int main() {
         clear();
         using namespace std;
 
-        // ==== Teks Sambutan di Tengah ====
+        // untuk menampilkan teks sambutan di menu awal game
         string judul = "SELAMAT DATANG";
         string sub = "DI GAME FLAPPY BIRD";
         string instruksi = "Pilih menu di bawah";
@@ -53,7 +53,7 @@ int main() {
 
         refresh();
 
-        // ==== Print Menu ====
+        // Print Menu 
         print_menu(menu_win, pilihanTerpilih, opsi, jumlahOpsi);
 
         int tombol = wgetch(menu_win);

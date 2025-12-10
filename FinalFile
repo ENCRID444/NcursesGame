@@ -31,6 +31,27 @@ void simpanSkorTertinggi(int skor){
     }
 }
 
+//fungsi untuk menampilkan menu awal
+void menuAwal(){
+    clear();
+
+    //untuk posisi tengah di ukuran layar
+    int tinggi, lebar;
+    getmaxyx(stdscr, tinggi, lebar);
+
+    //untuk menghitung posisi tengah 
+    int tengah = lebar/2;
+
+    //untuk menampilkan judul game
+    mvprintw(5, tengah-10, "=========================");
+    mvprintw(6, tengah-10, "      FLAPPY BIRD        ");
+    mvprintw(7, tengah-10, "=========================");
+
+    //menampilkan skor tertinggi di bagian atas
+    mvprintw(2, 5, "SKOR TERTINGGI: %d", skorTertinggi);
+
+    //menampilkkan perintah game
+    
 
 // Fungsi utama game Flappy Bird
 void mulaiPermainan() {

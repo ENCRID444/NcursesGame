@@ -235,4 +235,65 @@ void mulaiPermainan() {
     curs_set(1);
 }
 
+int main(){
+    //setup random
+    srand(time(NULL));
+
+    //muat skor tertinggi dari file
+    muatSkorTertinggi();
+
+    //setup ncurses
+    initscr();
+    cbreak();
+    noecho();
+    curs_set(1);
+
+    bool programBerjalan = true;
+
+    while(programBerjalan){
+        //Tampilkan menu awal
+        menuAwal();
+
+        //tampilkan intruksi input
+        mvprintw(20, 50, "Masukan pilihan (1 atau 2): ");
+        refresh();
+
+        //baca input menu
+        char pilihan = getch();
+
+        //proses pilihan
+        switch(pilihan){
+            case '1':        //Mulai Permainan
+                mulaiPermainan();
+                break;
+            case '2':   //keluar
+                //tampilkan pesan perpisahan
+                clear();
+                int tinggi, lebar;
+                getmaxyx(stdscr, tinggi, lebar);
+                mvprintw(tinggi/2 - 2, lebar/2 - 15, "Terima kasih telah bermain!");
+                mvprintw(tinggi/2, lebar/2 - 15, "Skor Tertinggi: %d", skorTertinggi);
+                mvprintw(tinggi/2 + 2, lebar/2 - 15, "Tekan tombol apa saja untuk keluar. . .");
+
+                refresh();
+                getch();
+                
+                programBerjalan = false;
+                break;
+                
+            default:
+                // Input tidak valid
+                clear();
+                mvprintw(10, 10, "Pilihan tidak valid! Tekan tombol...");
+                refresh();
+                getch();
+                break;
+        }
+    }
+    
+    // Cleanup
+    endwin();
+    return 0;
+}
+
 

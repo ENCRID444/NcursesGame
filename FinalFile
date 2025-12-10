@@ -196,3 +196,43 @@ void mulaiPermainan() {
     
     clear();
 
+    // Tampilkan hasil permainan
+    mvprintw(tinggi/2 - 5, lebar/2 - 15, "==============================");
+    mvprintw(tinggi/2 - 4, lebar/2 - 15, "         GAME OVER           ");
+    mvprintw(tinggi/2 - 3, lebar/2 - 15, "==============================");
+    
+    // Tampilkan skor saat ini
+    mvprintw(tinggi/2 - 1, lebar/2 - 15, "Skor Anda:           %d", skor);
+    
+    // Tampilkan skor tertinggi (setelah mungkin diperbarui)
+    mvprintw(tinggi/2 + 1, lebar/2 - 15, "Skor Tertinggi:      %d", skorTertinggi);
+    
+    // Beri pesan khusus berdasarkan skor
+    mvprintw(tinggi/2 + 3, lebar/2 - 15, "PESAN Atmin:");
+    if(skor == 0) {
+        mvprintw(tinggi/2 + 4, lebar/2 - 15, "Pencet SPASI Kocak");
+    } else if(skor < 5) {
+        mvprintw(tinggi/2 + 4, lebar/2 - 15, "Masih Kroco sih");
+    } else if(skor < 10) {
+        mvprintw(tinggi/2 + 4, lebar/2 - 15, "Gelok");
+    } else if(skor < 20) {
+        mvprintw(tinggi/2 + 4, lebar/2 - 15, "Gacor Ketua");
+    } else {
+        mvprintw(tinggi/2 + 4, lebar/2 - 15, "Ampun puhh");
+    }
+    
+    // Cek apakah memecahkan rekor
+    if(skor == skorTertinggi && skor > 0) {
+        mvprintw(tinggi/2 + 6, lebar/2 - 20, "REKOR BARU TERCIPTA!");
+    }
+    
+    mvprintw(tinggi/2 + 8, lebar/2 - 15, "Pencet basing untuk balik ke menu");
+    
+    refresh();
+    getch();
+    
+    // Kembali ke menu
+    curs_set(1);
+}
+
+

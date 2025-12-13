@@ -51,7 +51,23 @@ void menuAwal(){
     mvprintw(2, 5, "SKOR TERTINGGI: %d", skorTertinggi);
 
     //menampilkkan perintah game
-    
+    mvprintw(10, tengah - 10, "Cara Bermmain:");
+    mvprintw(11, tengah - 8, "SPASI : Lompat");
+    mvprintw(12, tengah - 8, "ESC : Kembali ke menu");
+
+    //menampilkan pilihan menu
+    mvprintw(15, tengah - 10, "PILIH MENUU: ");
+    mvprintw(17, tengah - 8, "1. MULAI PERMAINAN");
+    mvprintw(18, tengah - 8, "2. KELUAR");
+
+    //menampilkan nama-nama pembuat
+    mvprintw(tinggi - 5, tengah - 10, "DIBUAT OLEH:");
+    mvprintw(tinggi - 4, tengah - 8, "WENNO SIVAN MAHIBRA");
+    mvprintw(tinggi - 3, tengah - 8, "NAILA SALSABIL GHOZY");
+    mvprintw(tinggi - 2, tengah - 8, "JENY SARAH CHANTIKA S.");
+
+    refresh();
+}
 
 // Fungsi utama game Flappy Bird
 void mulaiPermainan() {

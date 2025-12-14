@@ -51,12 +51,12 @@ void menuAwal(){
     mvprintw(2, 5, "SKOR TERTINGGI: %d", skorTertinggi);
 
     //menampilkkan perintah game
-    mvprintw(10, tengah - 10, "Cara Bermmain:");
+    mvprintw(10, tengah - 10, "Cara Bermain:");
     mvprintw(11, tengah - 8, "SPASI : Lompat");
-    mvprintw(12, tengah - 8, "ESC : Kembali ke menu");
+    mvprintw(12, tengah - 8, "ESC   : Kembali ke menu");
 
     //menampilkan pilihan menu
-    mvprintw(15, tengah - 10, "PILIH MENUU: ");
+    mvprintw(15, tengah - 10, "PILIH MENU: ");
     mvprintw(17, tengah - 8, "1. MULAI PERMAINAN");
     mvprintw(18, tengah - 8, "2. KELUAR");
 
